@@ -14,7 +14,7 @@ import Contact from './pages/Contact/Contact';
 import Skills from './pages/Skiils/Skills';
 
 function App() {
-  const [theme, setTheme] = useState('dark');
+  const theme = "dark";
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
