@@ -126,7 +126,16 @@ const Footer = styled.div`
   align-items: center;
   gap: 20px;
   width: 50%;
+  margin: 0 auto;
+
+  @media (max-width: 600px) {
+    width: 100%;           /* Full width on mobile */
+    flex-direction: column; /* Stack items vertically */
+    justify-content: center;
+    gap: 15px;
+  }
 `;
+
 
 const IconDiv = styled.div`
   display: flex;
@@ -174,6 +183,9 @@ const Button = styled.a`
     background-color: ${(props) => (props.theme.body === '#f1f1f1' ? '#5a67d8' : '#d1d1d1')};
     transform: translateY(-3px);
     color: ${(props) => (props.theme.body === '#f1f1f1' ? '#ffffff' : '#323232')};
+  }
+  @media (max-width: 600px) {
+    align-self: center; /* center the button horizontally in column layout */
   }
 `;
 

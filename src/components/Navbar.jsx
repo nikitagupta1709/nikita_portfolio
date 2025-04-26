@@ -155,6 +155,7 @@ const Navbar = () => {
   }, []);
 
   const firstNameInitial = 'N'; // Your initial here
+  const closeMenu = () => setMenuOpen(false);
 
   return (
     <Nav>
@@ -238,30 +239,29 @@ const Navbar = () => {
             animate="open"
             exit="closed"
             variants={navVariants}
-
           >
             <li>
-              <NavItem to="/" exact="true">
+              <NavItem to="/" exact="true" onClick={closeMenu}>
                 Home
               </NavItem>
             </li>
             <li>
-              <NavItem to="/about">
+              <NavItem to="/about" onClick={closeMenu}>
                 About
               </NavItem>
             </li>
             <li>
-              <NavItem to="/projects">
+              <NavItem to="/projects" onClick={closeMenu}>
                 Projects
               </NavItem>
             </li>
             <li>
-              <NavItem to="/experience">
+              <NavItem to="/experience" onClick={closeMenu}>
                 Experience
               </NavItem>
             </li>
             <li>
-              <NavItem to="/contact">
+              <NavItem to="/contact" onClick={closeMenu}>
                 Contact
               </NavItem>
             </li>
@@ -272,17 +272,17 @@ const Navbar = () => {
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 onClick={(e) => {
-                  // just to be safe, don't let React Router interfere with this external link
                   e.stopPropagation();
+                  closeMenu();
                 }}
               >
                 Download Resume
               </Button>
-
             </li>
           </NavLinks>
         )}
       </AnimatePresence>
+
     </Nav>
   );
 };
