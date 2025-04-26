@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { skillCategories } from '../../utils/project';
+import { skillCategories } from '../../utils/common_function';
 
 
 const Section = styled(motion.div)`

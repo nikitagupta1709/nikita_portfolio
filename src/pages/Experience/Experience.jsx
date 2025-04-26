@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiChevronDown } from 'react-icons/fi';
+import { experiences } from '../../utils/common_function';
 
 const Wrapper = styled.div`
   max-width: 900px;
@@ -106,7 +107,26 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.8rem;
+  position: relative;
+  padding-left: 1.3rem;
+  line-height: 1.5;
+  font-weight: 500;
+
+  &::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #6e8efb;
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+`;
+
+const Highlight = styled.span`
+  color: #6e8efb;
+  font-weight: 700;
 `;
 
 const ChevronIcon = styled(FiChevronDown)`
@@ -117,44 +137,39 @@ const ChevronIcon = styled(FiChevronDown)`
   margin-left: 1rem;
 `;
 
-const experiences = [
-  {
-    role: "SDE2 (Software Development Engineer II)",
-    company: "Twinleaves",
-    duration: "May 2025 – Present",
-    logo: "/twinleaves_logo.jpg", // Add your actual logo paths here
-    details: [
-      "Took ownership of the end-to-end development of key product features, delivering them on-time and with a focus on scalability and performance. Resulted in a 30% increase in system efficiency.",
-      "Led the design and implementation of system modules, improving scalability by 30% and reducing technical debt by 20%.",
-      "Improved development speed by 30% by implementing best practices for code quality and design patterns, reducing bugs by 15% and increasing development efficiency.",
-      "Collaborated with cross-functional teams (product, design, QA), leading to the successful launch of 3 major features aligned with business goals, which increased user engagement by 25%.",
-      "Mentored 5+ junior engineers, improving their productivity by 15% and enhancing the team’s overall skill set.",
-      "Contributed to system architecture, ensuring that the platform was scalable and maintainable, leading to a 20% reduction in future maintenance costs.",
-      "Drove CI/CD best practices, reducing deployment time by 40%, enabling more frequent and seamless releases with fewer rollbacks.",
-    ],
-  },
-  {
-    role: "Software Engineer",
-    company: "Twinleaves",
-    duration: "Feb 2023 – April 2025",
-    logo: "/twinleaves_logo.jpg", // Replace with real logo
-    details: [
-      "Led the development of a B2B product initiative, improving operational efficiency across multiple companies and reducing manual effort by 30%.",
-      "Engineered a custom data grid in React.js, reducing load times by 40% and enhancing the UI’s responsiveness by 25%.",
-      "Optimized performance using React’s virtual DOM, cutting unnecessary re-renders by 50% and improving speed by 35%.",
-      "Integrated React Context API and Redux, reducing prop drilling by 60%, resulting in cleaner and more maintainable code.",
-      "Established RBAC security, preventing 95% unauthorized access and ensuring compliance with industry standards.",
-    ],
-  },
-];
-
 const Experience = () => {
   const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleIndex = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+  const excludedWords = ["B2B"];
 
+  function formatText(text) {
+    // Split by words and numbers including trailing %, preserving delimiters
+    const parts = text.split(/(\b\d+%?|\b\w+\b)/g).filter(Boolean);
+
+    const result = [];
+    for (let i = 0; i < parts.length; i++) {
+      const current = parts[i];
+
+      // Combine number + % if next part is '%'
+      if (/^\d+$/.test(current) && parts[i + 1] === '%') {
+        result.push(<Highlight key={i}>{current + '%'}</Highlight>);
+        i++; // skip '%'
+        continue;
+      }
+
+      // Highlight numbers (with optional %) if not in excludedWords
+      if (!excludedWords.includes(current) && /^\d+%?$/.test(current)) {
+        result.push(<Highlight key={i}>{current}</Highlight>);
+      } else {
+        result.push(current);
+      }
+    }
+
+    return result;
+  }
   return (
     <Wrapper>
       <Title>Work Experience</Title>
@@ -199,9 +214,11 @@ const Experience = () => {
               >
                 <List>
                   {exp.details.map((point, i) => (
-                    <ListItem key={i}>{point}</ListItem>
+                    <ListItem key={i}>{formatText(point)}</ListItem>
                   ))}
                 </List>
+
+
               </AccordionContent>
             )}
           </AnimatePresence>

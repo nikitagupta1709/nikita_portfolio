@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { motion, AnimatePresence } from "framer-motion";
-import { projects } from "../../utils/project";
+import { projects } from "../../utils/common_function";
 
 // Styled Components
 
@@ -35,7 +35,7 @@ const TimelineItem = styled.li`
     top: 5px;
     width: 16px;
     height: 16px;
-      background: linear-gradient(135deg, #6e8efb, #a777e3);
+    background: linear-gradient(135deg, #6e8efb, #a777e3);
     border-radius: 50%;
     border: 3px solid white;
     box-shadow: 0 0 0 2px #6e8efb;
@@ -67,6 +67,7 @@ const ProjectDetails = styled(motion.div)`
   box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
   color: #34495e;
   font-size: 0.95rem;
+  overflow: hidden;
 `;
 
 const TechList = styled.ul`
@@ -111,19 +112,8 @@ const ProjectImage = styled.img`
   box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
 `;
 
-// Motion Variants
-const detailsVariants = {
-    hidden: { opacity: 0, height: 0, overflow: "hidden" },
-    visible: {
-        opacity: 1,
-        height: "auto",
-        overflow: "visible",
-        transition: { duration: 0.4, ease: "easeInOut" },
-    },
-};
-
 const Projects = () => {
-    const [openIndex, setOpenIndex] = useState(0); // <-- Default first open
+    const [openIndex, setOpenIndex] = useState(0); // Default first open
 
     const toggleOpen = (index) => {
         setOpenIndex(openIndex === index ? null : index);
@@ -138,14 +128,15 @@ const Projects = () => {
                             {project.title}
                             <ToggleIcon open={openIndex === index}>+</ToggleIcon>
                         </ProjectTitle>
+
                         <AnimatePresence initial={false}>
                             {openIndex === index && (
                                 <ProjectDetails
                                     key="content"
-                                    initial="hidden"
-                                    animate="visible"
-                                    exit="hidden"
-                                    variants={detailsVariants}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    layout
                                 >
                                     <p>{project.description}</p>
 
@@ -169,7 +160,9 @@ const Projects = () => {
                                         )}
                                     </Links>
 
-                                    {project.image && <ProjectImage src={project.image} alt={project.title} />}
+                                    {project.image && (
+                                        <ProjectImage src={project.image} alt={project.title} />
+                                    )}
                                 </ProjectDetails>
                             )}
                         </AnimatePresence>
