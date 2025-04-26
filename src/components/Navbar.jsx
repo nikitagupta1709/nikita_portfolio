@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiMenu, FiX } from 'react-icons/fi';
@@ -20,6 +20,7 @@ const NavLeft = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
 `;
 
 const ProfileImage = styled.img`
@@ -93,7 +94,7 @@ const NavItem = styled(NavLink)`
 const Button = styled(motion.a)`
   padding: 0.5rem 1rem;
   background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: white;
+  color: #fff;
   border-radius: 8px;
   text-decoration: none;
   font-weight: 600;
@@ -102,6 +103,7 @@ const Button = styled(motion.a)`
 
   &:hover {
     transform: translateY(-5px);
+    color: #fff;
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
   }
 
@@ -137,6 +139,7 @@ const navVariants = {
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -151,18 +154,13 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Close menu when clicking a link
-  const handleNavClick = () => {
-    if (isMobile) setMenuOpen(false);
-  };
-
   const firstNameInitial = 'N'; // Your initial here
 
   return (
     <Nav>
-      <NavLeft>
+      <NavLeft onClick={() => navigate('/')}>
         {location.pathname === '/' ? (
-          <InitialLetter>{firstNameInitial}</InitialLetter>
+          <InitialLetter >{firstNameInitial}</InitialLetter>
         ) : (
           <ProfileImage src="/profileImage.jpg" alt="Profile" />
         )}
@@ -185,41 +183,45 @@ const Navbar = () => {
           style={{ position: 'static', height: 'auto', width: 'auto', boxShadow: 'none', padding: 0, flexDirection: 'row' }}
         >
           <li>
-            <NavItem to="/" exact="true" onClick={handleNavClick}>
+            <NavItem to="/" exact="true">
               Home
             </NavItem>
           </li>
           <li>
-            <NavItem to="/about" onClick={handleNavClick}>
+            <NavItem to="/about">
               About
             </NavItem>
           </li>
           <li>
-            <NavItem to="/projects" onClick={handleNavClick}>
+            <NavItem to="/projects">
               Projects
             </NavItem>
           </li>
           <li>
-            <NavItem to="/skills" onClick={handleNavClick}>
+            <NavItem to="/skills">
               Skills
             </NavItem>
           </li>
           <li>
-            <NavItem to="/experience" onClick={handleNavClick}>
+            <NavItem to="/experience">
               Experience
             </NavItem>
           </li>
           <li>
-            <NavItem to="/contact" onClick={handleNavClick}>
+            <NavItem to="/contact">
               Contact
             </NavItem>
           </li>
           <li>
             <Button
-              href="/resume.pdf"
+              href="https://drive.google.com/drive/folders/180xQdm9VWQRM1JneHXamiwyX_ajWaZZi?usp=drive_link"
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
+              onClick={(e) => {
+                // just to be safe, don't let React Router interfere with this external link
+                e.stopPropagation();
+              }}
             >
               Download Resume
             </Button>
@@ -236,42 +238,47 @@ const Navbar = () => {
             animate="open"
             exit="closed"
             variants={navVariants}
-            onClick={handleNavClick}
+
           >
             <li>
-              <NavItem to="/" exact="true" onClick={handleNavClick}>
+              <NavItem to="/" exact="true">
                 Home
               </NavItem>
             </li>
             <li>
-              <NavItem to="/about" onClick={handleNavClick}>
+              <NavItem to="/about">
                 About
               </NavItem>
             </li>
             <li>
-              <NavItem to="/projects" onClick={handleNavClick}>
+              <NavItem to="/projects">
                 Projects
               </NavItem>
             </li>
             <li>
-              <NavItem to="/experience" onClick={handleNavClick}>
+              <NavItem to="/experience">
                 Experience
               </NavItem>
             </li>
             <li>
-              <NavItem to="/contact" onClick={handleNavClick}>
+              <NavItem to="/contact">
                 Contact
               </NavItem>
             </li>
             <li>
               <Button
-                href="/resume.pdf"
+                href="https://drive.google.com/drive/folders/180xQdm9VWQRM1JneHXamiwyX_ajWaZZi?usp=drive_link"
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
+                onClick={(e) => {
+                  // just to be safe, don't let React Router interfere with this external link
+                  e.stopPropagation();
+                }}
               >
                 Download Resume
               </Button>
+
             </li>
           </NavLinks>
         )}
