@@ -36,7 +36,7 @@ const InitialLetter = styled.div`
   background: linear-gradient(135deg, #6e8efb, #a777e3);
   color: white;
   font-weight: 900;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border-radius: 50%;
   display: flex;
@@ -154,7 +154,7 @@ const Navbar = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const firstNameInitial = 'N'; // Your initial here
+  const firstNameInitial = 'NG'; // Your initial here
   const closeMenu = () => setMenuOpen(false);
 
   return (
