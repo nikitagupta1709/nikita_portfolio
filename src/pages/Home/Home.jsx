@@ -203,9 +203,9 @@ const Home = () => {
         <HelloImage src={'/helloGif.gif'} alt="Hello Gif" />
         Hey, I'm Nikita Gupta
       </Heading>
-      <SubHeading>Full Stack Developer | React • Node • MongoDB</SubHeading>
+      <SubHeading>Full Stack Developer | React • Node • MongoDB • Generative AI</SubHeading>
       <SummaryCard>
-        I'm a Full-Stack Developer with experience in crafting seamless, high-performance web apps.
+        I'm a Full-Stack Developer with 2+ years of experience in crafting seamless, high-performance web apps.
         Proficient in React.js, Node.js, and MongoDB, with a flair for clean architecture and intuitive design.
         What drives me is innovation, continuous growth, and the pursuit of building impactful digital experiences.
       </SummaryCard>

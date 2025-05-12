@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown, FiCheckCircle } from 'react-icons/fi';
 import { experiences } from '../../utils/common_function';
 
 const Wrapper = styled.div`
@@ -102,31 +102,43 @@ const AccordionContent = styled(motion.div)`
 
 const List = styled.ul`
   margin-top: 0.8rem;
-  list-style-type: disc;
-  padding-left: 1.5rem;
+  padding-left: 0;
 `;
 
-const ListItem = styled.li`
-  margin-bottom: 0.8rem;
-  position: relative;
-  padding-left: 1.3rem;
-  line-height: 1.5;
+const ListItem = styled(motion.li)`
+  margin-bottom: 1rem;
+  padding: 1rem;
+  list-style: none;
+  border-left: 4px solid #6e8efb;
+  background-color: #f5f7ff;
+    color: #000;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
   font-weight: 500;
+`;
 
-  &::before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: #6e8efb;
-    font-size: 1.2rem;
-    line-height: 1.5;
-  }
+const Icon = styled(FiCheckCircle)`
+  color: #6e8efb;
+  flex-shrink: 0;
+  font-size: 1.2rem;
+  margin-top: 4px;
 `;
 
 const Highlight = styled.span`
   color: #6e8efb;
   font-weight: 700;
+`;
+
+const Badge = styled.span`
+  background: #e0e7ff;
+  color: #4338ca;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  margin-left: 0.5rem;
+  font-weight: 600;
 `;
 
 const ChevronIcon = styled(FiChevronDown)`
@@ -143,26 +155,26 @@ const Experience = () => {
   const toggleIndex = (index) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
+
   const excludedWords = ["B2B"];
 
   function formatText(text) {
-    // Split by words and numbers including trailing %, preserving delimiters
     const parts = text.split(/(\b\d+%?|\b\w+\b)/g).filter(Boolean);
 
     const result = [];
     for (let i = 0; i < parts.length; i++) {
       const current = parts[i];
 
-      // Combine number + % if next part is '%'
       if (/^\d+$/.test(current) && parts[i + 1] === '%') {
         result.push(<Highlight key={i}>{current + '%'}</Highlight>);
-        i++; // skip '%'
+        i++;
         continue;
       }
 
-      // Highlight numbers (with optional %) if not in excludedWords
       if (!excludedWords.includes(current) && /^\d+%?$/.test(current)) {
         result.push(<Highlight key={i}>{current}</Highlight>);
+      } else if (['React', 'Redux', 'Node.js', 'ownership', 'Firebase', 'RBAC', 'Langchain', 'Agentspace', 'CI/CD'].includes(current)) {
+        result.push(<Badge key={i}>{current}</Badge>);
       } else {
         result.push(current);
       }
@@ -170,6 +182,7 @@ const Experience = () => {
 
     return result;
   }
+
   return (
     <Wrapper>
       <Title>Work Experience</Title>
@@ -207,18 +220,25 @@ const Experience = () => {
                 animate="open"
                 exit="collapsed"
                 variants={{
-                  open: { height: "auto", opacity: 1, y: 0 },
+                  open: { height: 'auto', opacity: 1, y: 0 },
                   collapsed: { height: 0, opacity: 0, y: -10 },
                 }}
-                transition={{ duration: 0.35, ease: "easeInOut" }}
+                transition={{ duration: 0.35, ease: 'easeInOut' }}
               >
                 <List>
                   {exp.details.map((point, i) => (
-                    <ListItem key={i}>{formatText(point)}</ListItem>
+                    <ListItem
+                      key={i}
+                      even={i % 2 === 0}
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.1 }}
+                    >
+                      <Icon />
+                      <div>{formatText(point)}</div>
+                    </ListItem>
                   ))}
                 </List>
-
-
               </AccordionContent>
             )}
           </AnimatePresence>
@@ -229,219 +249,3 @@ const Experience = () => {
 };
 
 export default Experience;
-
-// // src/pages/Experience.jsx
-// import React, { useState } from 'react';
-// import styled from 'styled-components';
-// import { motion, AnimatePresence } from 'framer-motion';
-
-// const Container = styled.div`
-//   max-width: 900px;
-//   margin: 3rem auto;
-//   display: flex;
-//   gap: 2rem;
-//   min-height: 400px;
-//   @media (max-width: 768px) {
-//     flex-direction: column;
-//   }
-// `;
-
-// const Timeline = styled.div`
-//   flex: 1;
-//   border-left: 3px solid ${({ theme }) => theme.text + '44'};
-//   position: relative;
-//   padding-left: 2rem;
-//   @media (max-width: 768px) {
-//     border-left: none;
-//     border-top: 3px solid ${({ theme }) => theme.text + '44'};
-//     padding-left: 0;
-//     padding-top: 2rem;
-//     display: flex;
-//     justify-content: space-around;
-//   }
-// `;
-
-// const TimelineItem = styled.div`
-//   position: relative;
-//   margin-bottom: 3rem;
-//   cursor: pointer;
-//   padding-left: 1.5rem;
-
-//   &:last-child {
-//     margin-bottom: 0;
-//   }
-
-//   @media (max-width: 768px) {
-//     padding-left: 0;
-//     margin-bottom: 0;
-//   }
-// `;
-
-// const Dot = styled.div`
-//   position: absolute;
-//   left: -11px;
-//   top: 0;
-//   width: 18px;
-//   height: 18px;
-//   border-radius: 50%;
-//   border: 3px solid ${({ active, theme }) => (active ? theme.primary : theme.text + '88')};
-//   background-color: ${({ active, theme }) => (active ? theme.primary : 'transparent')};
-//   transition: all 0.3s ease;
-
-//   @media (max-width: 768px) {
-//     position: static;
-//     margin-bottom: 0.5rem;
-//   }
-// `;
-
-// const Year = styled.div`
-//   font-weight: 700;
-//   color: ${({ active, theme }) => (active ? theme.primary : theme.text + 'aa')};
-//   font-size: 1.1rem;
-//   margin-bottom: 0.2rem;
-//   transition: color 0.3s ease;
-
-//   @media (max-width: 768px) {
-//     font-size: 0.95rem;
-//   }
-// `;
-
-// const JobTitle = styled.div`
-//   font-weight: 600;
-//   color: ${({ theme }) => theme.text};
-//   font-size: 1rem;
-// `;
-
-// const DetailsPanel = styled(motion.div)`
-//   flex: 2;
-//   background: ${({ theme }) => theme.body};
-//   box-shadow: 0 8px 24px rgb(0 0 0 / 0.1);
-//   border-radius: 12px;
-//   padding: 2rem;
-//   color: ${({ theme }) => theme.text};
-//   display: flex;
-//   flex-direction: column;
-//   gap: 1rem;
-//   min-height: 320px;
-
-//   @media (max-width: 768px) {
-//     min-height: auto;
-//   }
-// `;
-
-// const CompanyLogo = styled.img`
-//   width: 120px;
-//   height: auto;
-//   border-radius: 12px;
-//   object-fit: contain;
-//   align-self: flex-start;
-//   margin-bottom: 1rem;
-// `;
-
-// const Role = styled.h3`
-//   font-size: 1.7rem;
-//   margin: 0 0 0.5rem 0;
-//   color: ${({ theme }) => theme.primary};
-// `;
-
-// const CompanyName = styled.h4`
-//   margin: 0 0 1rem 0;
-//   font-weight: 600;
-//   color: ${({ theme }) => theme.text + 'cc'};
-// `;
-
-// const DateRange = styled.p`
-//   font-style: italic;
-//   color: ${({ theme }) => theme.text + '99'};
-//   margin: 0 0 1rem 0;
-// `;
-
-// const BulletList = styled.ul`
-//   list-style: disc inside;
-//   margin: 0;
-//   padding-left: 1rem;
-//   color: ${({ theme }) => theme.text + 'dd'};
-//   li {
-//     margin-bottom: 0.75rem;
-//     line-height: 1.4;
-//   }
-// `;
-
-// const experiences = [
-//   {
-//     id: 1,
-//     role: 'Software Development Engineer II (SDE2)',
-//     company: 'Twinleaves',
-//     logo: '/twinleaves_logo.jpg', // Make sure you have this image or replace with a valid one
-//     dateRange: 'May 2025 – Present',
-//     details: [
-//       'Took ownership of the end-to-end development of key product features, delivering on-time with a focus on scalability and performance, resulting in a 30% increase in system efficiency.',
-//       'Led design and implementation of system modules, improving scalability by 30% and reducing technical debt by 20%.',
-//       'Improved development speed by 30% by implementing best practices for code quality and design patterns, reducing bugs by 15%.',
-//       'Collaborated with cross-functional teams (product, design, QA), successfully launching 3 major features, increasing user engagement by 25%.',
-//       'Mentored 5+ junior engineers, enhancing team productivity and skill set.',
-//       'Contributed to system architecture, reducing future maintenance costs by 20%.',
-//       'Drove CI/CD best practices, reducing deployment time by 40%, enabling seamless releases.',
-//     ],
-//   },
-//   {
-//     id: 2,
-//     role: 'Associate Software Engineer',
-//     company: 'Twinleaves',
-//     logo: '/twinleaves_logo.jpg',
-//     dateRange: 'Feb 2023 – April 2025',
-//     details: [
-//       'Led development of a B2B product initiative, improving operational efficiency and reducing manual effort by 30%.',
-//       'Engineered a custom data grid in React.js, reducing load times by 40% and enhancing UI responsiveness by 25%.',
-//       'Optimized performance using React’s virtual DOM, cutting unnecessary re-renders by 50% and improving speed by 35%.',
-//       'Integrated React Context API and Redux, reducing prop drilling by 60%, resulting in cleaner code.',
-//       'Established RBAC security, preventing 95% unauthorized access and ensuring compliance with industry standards.',
-//     ],
-//   },
-// ];
-
-// const Experience = () => {
-//   const [selected, setSelected] = useState(experiences[0].id);
-
-//   const currentExp = experiences.find((exp) => exp.id === selected);
-
-//   return (
-//     <Container>
-//       <Timeline>
-//         {experiences.map(({ id, role, dateRange }) => (
-//           <TimelineItem
-//             key={id}
-//             onClick={() => setSelected(id)}
-//             title={role}
-//           >
-//             <Dot active={selected === id} />
-//             <Year active={selected === id}>{dateRange}</Year>
-//             <JobTitle>{role}</JobTitle>
-//           </TimelineItem>
-//         ))}
-//       </Timeline>
-
-//       <AnimatePresence mode="wait" initial={false}>
-//         <DetailsPanel
-//           key={currentExp.id}
-//           initial={{ opacity: 0, x: 30 }}
-//           animate={{ opacity: 1, x: 0 }}
-//           exit={{ opacity: 0, x: -30 }}
-//           transition={{ duration: 0.4 }}
-//         >
-//           <CompanyLogo src={currentExp.logo} alt={currentExp.company} />
-//           <Role>{currentExp.role}</Role>
-//           <CompanyName>{currentExp.company}</CompanyName>
-//           <DateRange>{currentExp.dateRange}</DateRange>
-//           <BulletList>
-//             {currentExp.details.map((point, i) => (
-//               <li key={i}>{point}</li>
-//             ))}
-//           </BulletList>
-//         </DetailsPanel>
-//       </AnimatePresence>
-//     </Container>
-//   );
-// };
-
-// export default Experience;

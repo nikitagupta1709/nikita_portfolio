@@ -121,77 +121,77 @@ const HobbyTag = styled(motion.div)`
 
 
 const About = () => {
-    return (
-        <Wrapper
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-        >
-            <SectionTitle
-                initial={{ y: -50 }}
-                animate={{ y: 0 }}
-                transition={{ duration: 0.5 }}
-            >
-                About Me
-            </SectionTitle>
+  return (
+    <Wrapper
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1 }}
+    >
+      <SectionTitle
+        initial={{ y: -50 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        About Me
+      </SectionTitle>
 
-            <AboutText
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3, duration: 0.6 }}
-            >
-                Full-Stack Developer (SDE2) with 2+ years of experience building scalable, secure applications.
-                Skilled in React.js, Node.js, and MongoDB for B2B/B2C platforms. Leading feature development,
-                system design, and mentoring juniors. Passionate about building clean architectures and scalable solutions.
-            </AboutText>
+      <AboutText
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3, duration: 0.6 }}
+      >
+        Full-Stack Developer with 2+ years of experience building scalable, secure applications.
+        Skilled in React.js, Node.js, and MongoDB for B2B/B2C platforms. Leading feature development,
+        system design, and mentoring juniors. Passionate about building clean architectures and scalable solutions.
+      </AboutText>
 
-            <SectionTitle>Education</SectionTitle>
+      <SectionTitle>Education</SectionTitle>
 
-            <TimelineContainer>
-                <TimelineTrack>
-                    <TimelineCard
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5 }}
-                    >
-                        <h3> Masai School (NOLAN EDUTECH)</h3>
-                        <p>Full Stack Web Development Program</p>
-                        <p>Aug 2022 - Jan 2023</p>
-                    </TimelineCard>
+      <TimelineContainer>
+        <TimelineTrack>
+          <TimelineCard
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h3> Masai School (NOLAN EDUTECH)</h3>
+            <p>Full Stack Web Development Program</p>
+            <p>Aug 2022 - Jan 2023</p>
+          </TimelineCard>
 
-                    <TimelineCard
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.2 }}
-                    >
-                        <h3>Bundelkhand University</h3>
-                        <p>B.Tech in Computer Science</p>
-                        <p>July 2018 - Aug 2022</p>
-                        <p>CGPA: 8.12</p>
-                    </TimelineCard>
+          <TimelineCard
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <h3>Bundelkhand University</h3>
+            <p>B.Tech in Computer Science</p>
+            <p>July 2018 - Aug 2022</p>
+            <p>CGPA: 8.12</p>
+          </TimelineCard>
 
-                    {/* Add more cards if needed */}
-                </TimelineTrack>
-            </TimelineContainer>
+          {/* Add more cards if needed */}
+        </TimelineTrack>
+      </TimelineContainer>
 
-            <HobbiesWrapper
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-            >
-                <h2>Hobbies</h2>
+      <HobbiesWrapper
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2>Hobbies</h2>
 
-                <HobbyGrid>
-                    <HobbyTag bgColor="#6e8efb">Dance</HobbyTag>
-                    <HobbyTag bgColor="#f6a5c0">Sports</HobbyTag>
-                    <HobbyTag bgColor="#ffb347">Cooking</HobbyTag>
-                    <HobbyTag bgColor="#90ee90">Acting</HobbyTag>
-                    {/* Add more hobbies if you want */}
-                </HobbyGrid>
-            </HobbiesWrapper>
+        <HobbyGrid>
+          <HobbyTag bgColor="#6e8efb">Dance</HobbyTag>
+          <HobbyTag bgColor="#f6a5c0">Sports</HobbyTag>
+          <HobbyTag bgColor="#ffb347">Cooking</HobbyTag>
+          <HobbyTag bgColor="#90ee90">Acting</HobbyTag>
+          {/* Add more hobbies if you want */}
+        </HobbyGrid>
+      </HobbiesWrapper>
 
-        </Wrapper>
-    );
+    </Wrapper>
+  );
 };
 
 export default About;
